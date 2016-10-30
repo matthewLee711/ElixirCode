@@ -285,11 +285,25 @@ def pick_color(image) do
   %Identicon.Image{hex: [r, g, b | _tail]} = image
 end
 
+# Another refactor
+def pick_color(image) do
+  %Identicon.Image{hex: [r, g, b | _tail]} = image
+  # Update image struct - create + add rgb
+  %Identicon.Image{image | color: {r, g, b}}
+end
+# TO
+def pick_color(%Identicon.Image{hex: [r, g, b | _tail]} = image) do
+  # Update image struct - create + add rgb
+  %Identicon.Image{image | color: {r, g, b}}
+end
+
+
 # Called Identicon.Image
 defmodule Identicon.Image do
 
 end
 
+# goal of piping is to send around object with all of stuff
 
 
 
