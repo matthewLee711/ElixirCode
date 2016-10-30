@@ -208,6 +208,42 @@ assert
 refute
 
 
+# Maps
+# create basic key value pair
+colors = %{primary: "red", secondary "blue"}
+# return red
+colors.primary
+> "red"
+# search for specific key value w/ pattern matching
+# each value is compared against
+%{secondary: secondary_color} = colors
+> "blue"
+# updating value in map
+colors = %{primary: "red"}
+# WE DO NOT MAINUPLATE OR CHANGE VALUES IN DS
+# We create a new data structure with changes
+Map.put(colors, :primary, "blue")
+# alternate 2 for updateing Map
+%{ colors | primary: "blue"}
+
+# KEYWORD LISTS
+# even though this looks like key value pair,
+# in memory this is a a tuple
+colors = [{:primary, "red"}, {:secondary, "green"}]
+colors[:primary]
+> "red"
+# With keyword list, you can use multiple of the same key
+# Maps cannot do that
+colors = [{:primary, "red"}, {:primary, "green"}]
+> [:primary, "red", :primary, "green"]
+# duplicate keys are good for database (ecto)
+# keyword lists, you can remove the []*** still passes
+# as one argument
+
+
+
+
+
 
 
 
