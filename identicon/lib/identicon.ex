@@ -7,9 +7,14 @@ defmodule Identicon do
   end
 
   def build_grid(%Identicon.Image{hex: hex} = image) do
-    hex
-    |> Enum.chunk(3)#split into list of 3 and remove tail
-    |> Enum.map(&mirror_row/1)
+    grid =
+      hex
+      |> Enum.chunk(3)#split into list of 3 and remove tail
+      |> Enum.map(&mirror_row/1)
+      |> List.flatten
+      |> Enum.with_index
+
+    %Identicon.Image{image | grid: grid}
   end
 
   def mirror_row(row) do
