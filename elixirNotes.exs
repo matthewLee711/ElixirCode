@@ -308,7 +308,14 @@ end
 
 # JOIN list together
 row ++ []
-
+# INTERSTING
+# map can go over exisiting list and do something on each list
+def build_grid(%Identicon.Image{hex: hex} = image) do
+  hex
+  |> Enum.chunk(3)#split into list of 3 and remove tail
+  # pass reference of function with one argument
+  |> Enum.map(&mirror_row/1)
+end
 
 
 
