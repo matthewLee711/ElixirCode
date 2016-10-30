@@ -306,7 +306,8 @@ end
 # goal of piping is to send around object with all of stuff
 
 
-
+# JOIN list together
+row ++ []
 
 
 
