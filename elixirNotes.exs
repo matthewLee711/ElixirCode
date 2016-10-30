@@ -192,13 +192,20 @@ mix deps.get
 # The syntax for module documentation
 # @moduledoc """
 # """
+# @doc """
+# """
 # then type to generate documentation
 mix docs
 
-
-
-
-
+TESTING
+# test_helper - for global tests
+# cards_test - for module specific test
+mix test # runs tests
+# Test types
+# 1. Testing signular specific fact using assertion
+# 2. Doc testing < this tests documentation you input!
+assert
+refute
 
 
 
