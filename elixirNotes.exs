@@ -116,6 +116,32 @@ NEED TO MATCH STRUCTURESSO IF NESTED, match nested
 color1
 > "red"
 
+# pattern matching with data structures and variables
+["red", color] = ["red", "blue"]
+# hardcoded red and match color with blue
+# must have identical right side
+# EX.
+{status, binary} = File.read(filename)
+
+case status do
+  :ok -> :erlang.binary_to_term binary
+  :error -> "That file does not exist"
+end
+# CHANGE STATEMNT ABOVE into
+case File.read(filename) do
+  {:ok, binary} -> :erlang.binary_to_term binary
+  {:error, reason} -> "That file does not exist"
+end
+# WHATS HAPPENEING:
+# In one step, doing two separate operations
+# thats crazy!!!
+{:ok, binary} = {:ok, ["filedata"]}
+# This won't match
+{:ok, _reason} = {:ok, ["filedata"]}
+# yes, we know this exists, but i dont want to use it
+# use underscore _var name
+
+
 # Elixir(transpiled) -> erlang(compiled and exe) -> beam
 # To use erlang, use = :erlang
 
@@ -136,8 +162,38 @@ end
 :error
 # two most common
 
+# Pipe Operator
+# original
+def create_hand(hand_size) do
+  deck = Cards.create_deck
+  deck = Cards.shuffle(deck)
+  hand = Cards.deal(deck, hand_size)
+end
+# NEW
+# Takes return from create_deck and pass it to
+# shuffle then from suffle to deal with hand_size
+# deal goes first btw
+# very consistent first operators
+def create_hand(hand_size) do
+  Cards.create_deck
+  |> Cards.shuffle
+  |> Cards.deal(hand_size)
+end
 
+# USE EXDOC to help with documentation
+# generates documentation html file of different
+# GO into mix file and add tuple of dependencies
+# this will retreive and install dependencies
+mix deps.get
 
+# documentation types:
+# module - summary of what module does
+# function - individual function
+# The syntax for module documentation
+# @moduledoc """
+# """
+# then type to generate documentation
+mix docs
 
 
 
