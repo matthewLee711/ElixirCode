@@ -325,8 +325,13 @@ end
 # List.flatten gets rid of lists in lists
 # Enum.with_index - turns list with values into tuples with index
 
+# gets remainder
+rem(code, 2)
 
-
+# Grab ven numbers from list
+Enum.filter grid, fn({code, _index}) ->
+  rem(code, 2) == 0
+end
 
 
 
