@@ -241,6 +241,81 @@ colors = [{:primary, "red"}, {:primary, "green"}]
 # as one argument
 
 
+# -----------------------------------------------------------
+
+# Hashing stuff
+def hash_input(input) do
+  :crypto.hash(:md5, input)
+  |> :binary.bin_to_list
+  # produces string of numbers
+end
+
+
+
+# Struct
+# a map but can be assigned default value and has checking
+# create Struct call hex with default value of nil
+defstruct hex: nil
+# in iex to initialize struct type in..
+%Identicon.Image{}
+> %Identicon.Image{hex: nil}
+# initialize with anything!
+%Identicon.Image{hex: []}
+> %Identicon.Image{hex: []}
+# struct enforce insert SPECIFIC property, mps can insert anything
+# You cant attach functions to struct***
+# only holds primitive data
+
+# is it an Identicon.imaage?
+# does it have a hex property?
+# doe it have a hex_list?
+# no, it is an undefined variable. lets assign it
+def pick_color(image) do
+  %Identicon.Image{hex: hex_list} = image
+  # grab first three values PATTERN MATHCING!
+  [r, g, b] = hex_list
+  # BUT, it wont work!
+  # since there are too many values, you need
+  # to add..
+  # acknowledges fact other values, but toss em
+  [r, g, b | _tail] = hex_list
+end
+# HOWEVER, that is too long, lets refactor
+def pick_color(image) do
+  %Identicon.Image{hex: [r, g, b | _tail]} = image
+end
+
+# Called Identicon.Image
+defmodule Identicon.Image do
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
