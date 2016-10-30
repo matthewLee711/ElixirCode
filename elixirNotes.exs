@@ -333,9 +333,26 @@ Enum.filter grid, fn({code, _index}) ->
   rem(code, 2) == 0
 end
 
+# gives referenceto image object so can update struct
+%Identicon.Image{grid: grid} = image
+# Dont need it in final function
+%Identicon.Image{grid: grid}
 
+# iterate over ever element inside a collection
+# unlike map, its not going to return a new function
+Enum.each
 
+# INTERSTING
+def draw_image(%Identicon.Image{color: color, pixel_map: pixel_map}) do
+  image = :egd.create(250, 250)
+  fill = :egd.color(color)
 
+  Enum.each pixel, fn({start, stop}) ->
+    :egd.filledRectangle(image, start, stop, fill)
+  end
+
+  :egd.render(image)
+end
 
 
 
