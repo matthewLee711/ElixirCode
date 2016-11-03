@@ -186,17 +186,73 @@ topic.ex
 We need to have a model schema. informs db of model. have to tell
 phoenix of what is inside of postgres
 # Model lets phoenix know whats inside the DB
-
+create schema and changeset in Topic model
 schema "topics" do
   field :title, :string
 end
 
-# Need validation
+# Does validation and can be insert into db
 def changeset(struct, params \\ %{}) do
   struct
   |> cast(params, [:title])
   |> validate_required([:title])
 end
+
+Changeset + Form Template = Usable Form
+
+step 4.
+Controller, one model, one view, 1 folder inside templates
+when you create folder in template, make it singlar.
+When you create the html file, make sure to name the html
+file as the name of the function in the controller
+
+step 5. MAKE sure to render html
+
+WE CAN WRITE elixir code to generate our form for us
+
+
+HTML RENDERING WITH ELIXIR
+# here comes elixir code
+
+<%= form_for @changeset, topic_path(@conn, :create), fn f -> end %>
+
+<% end %>
+# Create a form, using this changeset, whenever someone
+# presses enter(topic_path), send it to the create route,
+# which is related to topics. topic_path is to figure which
+# route we want to send this to.
+\/(what is actually running
+form_for(@changeset, topic_path(@conn, :create)), fn f ->
+end
+# This form also expects to be sent in a changeset and conn
+DONT FORGET
+# If you are rendering an html page that needs an input
+# you dont have to pass in conn
+render conn, "new.html", changeset: changeset
+
+new -- see form
+create - actually create it
+
+# CREATE
+csrf token for security
+params stores all inputs user wants to submit
+HOW params stores stuff
+params = %{"topic" => "asdf"}
+# TO access, use pattern matching
+%{"topic" => giveme} = params
+> giveme
+"asdf"
+vs.
+colors = %{red: "green"} #red is turned into an atom
+# thats why colors.red is accessable
+
+# Show all routes
+mix phoenix.routes 
+
+
+
+
+
 
 
 
