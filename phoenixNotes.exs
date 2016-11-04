@@ -247,21 +247,30 @@ colors = %{red: "green"} #red is turned into an atom
 # thats why colors.red is accessable
 
 # Show all routes
-mix phoenix.routes 
+mix phoenix.routes
 
 
+# To make edits
+get "/topics/:id/edit", TopicController, :edit
+send to topics with ID to edit. send to controller to
+edt handler
+
+Changeset + topic struct + form template = useable form
+
+# Topic added to generate correct path when submit form
+render conn, "edit.html", changeset: changeset, topic: topic
+
+# We pulled the topic out of the DB and pass it into template
+# then pass it to topic path JUST to generate the correct route
 
 
-
-
-
-
-
-
-
-
-
-
+# HOW UPDATE IS WORKING
+def update(conn, %{"id", => topic_id, "topic" => topic}) do
+  # Get old topic
+  old_topic = Repo.get(Topic, topic_id)
+  # pass old and new topic you want to update to
+  changeset = Topic.changeset(old_topic, topic)
+end
 
 
 

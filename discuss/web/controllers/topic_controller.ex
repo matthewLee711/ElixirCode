@@ -23,12 +23,37 @@ defmodule Discuss.TopicController do
     changeset = Topic.changeset(%Topic{}, topic)
     # Insert into DB, perform success or failure
     case Repo.insert(changeset) do
-      {:ok, post} ->
+      {:ok, _topic} ->
         conn
         |> put_flash(:info, "Topic Created")
         |> redirect(to: topic_path(conn, :index)) #send user to Topic ctrl, index
       {:error, changeset} ->
         render conn, "new.html", changeset: changeset
+    end
+  end
+
+  # Make edits to topic - params is a map
+  def edit(conn, %{"id" => topic_id}) do
+    # Pull data out of DB
+    topic = Repo.get(Topic, topic_id)
+    # Create changset out of topic out of db
+    # we make this changeset bc all forms epect to be working with changeset
+    changeset = Topic.changeset(topic)
+
+    render conn, "edit.html", changeset: changeset, topic: topic
+  end
+  # Works with edit - update record that already exists
+  def update(conn, %{"id" => topic_id, "topic" => topic}) do
+    old_topic = Repo.get(Topic, topic_id)
+    changeset = Topic.changeset(old_topic, topic)
+
+    case Repo.update(changeset) do
+      {:ok, _topic} ->
+        conn
+        |> put_flash(:info, "Topic Updated")
+        |> redirect(to: topic_path(conn, :index))
+      {:error, changset} ->
+        render conn, "edit.html", changeset: changeset, topic: old_topic
     end
   end
 end
