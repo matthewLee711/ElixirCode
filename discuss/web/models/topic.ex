@@ -4,7 +4,7 @@ defmodule Discuss.Topic do
   schema "topics" do
     field :title, :string
   end
-
+  # Use changeset in other topic stuff
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:title])

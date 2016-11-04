@@ -21,9 +21,12 @@ defmodule Discuss.TopicController do
   def create(conn, params) do
     %{"topic" => topic} = params
     changeset = Topic.changeset(%Topic{}, topic)
-    # Insert into DB success and failure
+    # Insert into DB, perform success or failure
     case Repo.insert(changeset) do
-      {:ok, post} -> IO.inspect(post)
+      {:ok, post} ->
+        conn
+        |> put_flash(:info, "Topic Created")
+        |> redirect(to: topic_path(conn, :index)) #send user to Topic ctrl, index
       {:error, changeset} ->
         render conn, "new.html", changeset: changeset
     end

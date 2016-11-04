@@ -13,7 +13,7 @@ Controller <-> changeset <-> Repo <-> Postgres
 # the data the user is trying to insert
 # Changeset will then be inserted into DB by Repo
 
-Repo will autimatically check if changeset is valid
+Repo will automatically check if changeset is valid
 
 # Look for errors under title
 <%= error_tag f, :title %>
