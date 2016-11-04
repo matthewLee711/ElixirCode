@@ -272,7 +272,8 @@ def update(conn, %{"id", => topic_id, "topic" => topic}) do
   changeset = Topic.changeset(old_topic, topic)
 end
 
-
+# How to specify delete
+<%= link "Delete", to: topic_path(@conn, :delete, topic), method: :delete %>
 
 
 

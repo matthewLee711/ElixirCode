@@ -39,3 +39,14 @@ Action:
 PUT /topics/12
 Controller method name:
 update
+
+
+
+
+# IN ROUTES FOLDER, instead all of that\
+# get "/", TopicController, :index
+# get "/topics/new", TopicController, :new
+# post "/topics", TopicController, :create
+# get "/topics/:id/edit", TopicController, :edit
+# put "/topics/:id", TopicController, :update
+resources "/", TopicController
