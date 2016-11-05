@@ -277,6 +277,23 @@ end
 
 
 
+BOOLEAN LOGIC
+
+red = 1 && "red"
+> "red"
+the reutrned value in this expressiion is "red" because it is the latter
+
+#  If there is a user ID and Repo.get is true, then entrer block
+# Result of user_id and Repo will be executed
+# If repo returns a user, then it will be assigned to user
+user = user_id && Repo.get(User, user_id) ->
+
+
+
+
+
+
+
 
 
 
