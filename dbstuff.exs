@@ -34,7 +34,15 @@ Discuss.Repo.all(Discuss.Topic)
 
 
 
+has many relationship
 
+A user has many relationship with topics
+A topic has one relationship with a user
+
+
+To add new column, do
+  mix ecto.gen.migration
+end
 
 
 

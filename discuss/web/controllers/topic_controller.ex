@@ -3,6 +3,11 @@ defmodule Discuss.TopicController do
 
   alias Discuss.Topic
 
+  # Executes before any handler - check if user logged in
+  plug Discuss.Plugs.RequireAuth when action in [:new, :create, :edit, :update, :delete]
+  # Check owner of post
+  plug :check_topic_owner when action in [:update, :edit, :delete]
+
   # Show all topics in html page
   def index(conn, _params) do
     topics = Discuss.Repo.all(Topic)
@@ -20,7 +25,12 @@ defmodule Discuss.TopicController do
   # Insert topic into DB -- handler
   def create(conn, params) do
     %{"topic" => topic} = params
-    changeset = Topic.changeset(%Topic{}, topic)
+    # changeset = Topic.changeset(%Topic{}, topic)
+    # Make sure you are logged in so you can add
+    changeset = conn.assigns.user
+    |> build_assoc(:topics) #create topic struct with user association
+    |> Topic.changeset(topic)
+
     # Insert into DB, perform success or failure
     case Repo.insert(changeset) do
       {:ok, _topic} ->
@@ -63,7 +73,19 @@ defmodule Discuss.TopicController do
 
     conn
     |> put_flash(:info, "Topic Deleted")
-    |> redirect(to: topic_path(conn, :index)) 
+    |> redirect(to: topic_path(conn, :index))
   end
 
+  def check_topic_owner(conn, _params) do
+    %{params: %{"id" => topic_id}} = conn
+    # If user id from db is same as connection id
+    if Repo.get(Topic, topic_id).user_id == conn.assigns.user.id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You cannot edit that")
+      |> redirect(to: topic_path(conn, :index))
+      |> halt()
+    end
+  end
 end

@@ -289,11 +289,15 @@ the reutrned value in this expressiion is "red" because it is the latter
 user = user_id && Repo.get(User, user_id) ->
 
 
+# Grab specific user
+iex -S mix
+Discuss.Repo.get(Discuss.User, 1)
 
+Bad thing about elixir,
+when you fetch from database, associations will not be fetched
 
-
-
-
+# **********************
+You need an association function to connect topics with user
 
 
 
